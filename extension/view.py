@@ -13,6 +13,10 @@ class ExtensionListingView(LoginRequiredView):
 
     def list_json(self):
         params = extract_select2_params(request.args)
+        context = request.args.get('context')
+        if context:
+            params['context'] = context
+
         extensions = self.service.list(**params)
         results = [{'id': extension['exten'], 'text': extension['exten']} for extension in extensions['items']]
         return jsonify(build_select2_response(results, extensions['total'], params))
