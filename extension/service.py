@@ -7,5 +7,4 @@ from wazo_admin_ui.helpers.service import BaseConfdService
 
 class ExtensionService(BaseConfdService):
 
-    resource_name = 'extension'
     resource_confd = 'extensions'
