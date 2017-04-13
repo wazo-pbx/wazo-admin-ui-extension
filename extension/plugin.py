@@ -19,6 +19,6 @@ class Plugin(object):
         ExtensionListingView.service = ExtensionService()
         ExtensionListingView.register(extension, route_base='/extensions_listing')
 
-        register_listing_url('exten_extension', 'extension.ExtensionListingView:list_json')
+        register_listing_url('available_extension', 'extension.ExtensionListingView:list_available_exten')
 
         core.register_blueprint(extension)
