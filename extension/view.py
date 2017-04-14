@@ -36,6 +36,9 @@ class ExtensionListingView(LoginRequiredView):
             values = [v for v in xrange(start, end) if not search or search in unicode(v)]
             all_extens.update(values)
 
+        if not all_extens:
+            return jsonify({'results': []})
+
         used_extens = set([])
         for extension in self.service.list(search=search)['items']:
             if search and search not in extension['exten']:
