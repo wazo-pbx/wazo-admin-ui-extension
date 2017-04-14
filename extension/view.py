@@ -7,6 +7,8 @@ from __future__ import unicode_literals
 from flask import jsonify, request
 from wazo_admin_ui.helpers.classful import LoginRequiredView
 
+MAX_POSSIBILITIES = 1000
+
 
 class ExtensionListingView(LoginRequiredView):
 
@@ -24,11 +26,14 @@ class ExtensionListingView(LoginRequiredView):
         for user_range in context['user_ranges']:
             try:
                 start = int(user_range['start'])
-                end = int(user_range['end'])
+                end = int(user_range['end']) + 1
             except ValueError:
                 continue
 
-            values = [v for v in xrange(start, end+1) if not search or search in unicode(v)]
+            if end - start > MAX_POSSIBILITIES:
+                continue
+
+            values = [v for v in xrange(start, end) if not search or search in unicode(v)]
             all_extens.update(values)
 
         used_extens = set([])
