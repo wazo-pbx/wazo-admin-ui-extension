@@ -23,7 +23,7 @@ setup(
 
     entry_points={
         'wazo_admin_ui.plugins': [
-            'extension = extension.plugin:Plugin',
+            'extension = wazo_plugind_admin_ui_extension_official.plugin:Plugin',
         ]
     }
 )
