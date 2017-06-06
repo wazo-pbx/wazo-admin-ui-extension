@@ -5,9 +5,32 @@
 from __future__ import unicode_literals
 
 from flask import jsonify, request
-from wazo_admin_ui.helpers.classful import LoginRequiredView
+from flask_menu.classy import classy_menu_item
+
+from wazo_admin_ui.helpers.classful import BaseView, LoginRequiredView
+from .form import ExtensionForm
 
 MAX_POSSIBILITIES = 1000
+
+
+class ExtensionView(BaseView):
+
+    form = ExtensionForm
+    resource = 'extension'
+
+    @classy_menu_item('.advanced', 'Advanced', order=9, icon="gears")
+    @classy_menu_item('.advanced.extensions', 'Extensions', order=1, icon="tty")
+    def index(self):
+        return super(ExtensionView, self).index()
+
+    def _populate_form(self, form):
+        form.context.choices = self._build_setted_choices_context(form)
+        return form
+
+    def _build_setted_choices_context(self, extension):
+        if not extension.context.data or extension.context.data == 'None':
+            return []
+        return [(extension.context.data, extension.context.data)]
 
 
 class ExtensionListingView(LoginRequiredView):

@@ -2,11 +2,14 @@
 # Copyright 2017 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0+
 
+from flask_menu.classy import register_flaskview
+
 from wazo_admin_ui.helpers.plugin import create_blueprint
 from wazo_admin_ui.helpers.destination import register_listing_url
 
 from .service import ExtensionService
-from .view import ExtensionListingView
+from .view import ExtensionView, ExtensionListingView
+
 
 extension = create_blueprint('extension', __name__)
 
@@ -15,6 +18,10 @@ class Plugin(object):
 
     def load(self, dependencies):
         core = dependencies['flask']
+
+        ExtensionView.service = ExtensionService()
+        ExtensionView.register(extension, route_base='/extensions')
+        register_flaskview(extension, ExtensionView)
 
         ExtensionListingView.service = ExtensionService()
         ExtensionListingView.register(extension, route_base='/extensions_listing')
