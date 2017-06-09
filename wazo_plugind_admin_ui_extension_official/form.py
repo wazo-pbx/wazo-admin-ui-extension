@@ -14,3 +14,8 @@ class ExtensionForm(BaseForm):
     exten = StringField('Extension', [InputRequired])
     context = SelectField('Context', [InputRequired], choices=[])
     submit = SubmitField('Submit')
+
+
+class ExtensionDestinationForm(BaseForm):
+    exten = StringField('Extension', [InputRequired])
+    context = StringField('Context', [InputRequired])
