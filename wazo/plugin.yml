@@ -1,9 +1,8 @@
 name: admin-ui-extension
 namespace: official
-version: 0.0.1
+version: 0.0.2
 author: Wazo Team
 display_name: Extensions
 tags:
   - beta
-  - internal
 homepage: https://github.com/wazo-pbx/wazo-admin-ui-extension
