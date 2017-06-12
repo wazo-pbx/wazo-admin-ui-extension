@@ -5,8 +5,9 @@
 from flask_menu.classy import register_flaskview
 
 from wazo_admin_ui.helpers.plugin import create_blueprint
-from wazo_admin_ui.helpers.destination import register_listing_url
+from wazo_admin_ui.helpers.destination import register_destination_form, register_listing_url
 
+from .form import ExtensionDestinationForm
 from .service import ExtensionService
 from .view import ExtensionView, ExtensionListingView
 
@@ -25,6 +26,8 @@ class Plugin(object):
 
         ExtensionListingView.service = ExtensionService()
         ExtensionListingView.register(extension, route_base='/extensions_listing')
+
+        register_destination_form('extension', 'Extension', ExtensionDestinationForm)
 
         register_listing_url('available_extension', 'extension.ExtensionListingView:list_available_exten')
 
