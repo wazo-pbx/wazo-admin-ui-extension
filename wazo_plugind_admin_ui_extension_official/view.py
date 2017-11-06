@@ -1,8 +1,5 @@
-# -*- coding: utf-8 -*-
 # Copyright 2017 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0+
-
-from __future__ import unicode_literals
 
 from flask import jsonify, request
 from flask_menu.classy import classy_menu_item
@@ -56,7 +53,7 @@ class ExtensionListingView(LoginRequiredView):
             if end - start > MAX_POSSIBILITIES:
                 continue
 
-            values = [v for v in xrange(start, end) if not search or search in unicode(v)]
+            values = [v for v in range(start, end) if not search or search in str(v)]
             all_extens.update(values)
 
         if not all_extens:
