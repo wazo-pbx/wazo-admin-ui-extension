@@ -21,10 +21,10 @@ class ExtensionView(BaseView):
         return super(ExtensionView, self).index()
 
     def _populate_form(self, form):
-        form.context.choices = self._build_setted_choices_context(form)
+        form.context.choices = self._build_set_choices_context(form)
         return form
 
-    def _build_setted_choices_context(self, extension):
+    def _build_set_choices_context(self, extension):
         if not extension.context.data or extension.context.data == 'None':
             return []
         return [(extension.context.data, extension.context.data)]
