@@ -1,8 +1,5 @@
-# -*- coding: utf-8 -*-
 # Copyright 2017 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0+
-
-from __future__ import unicode_literals
 
 from flask import jsonify, request
 from flask_menu.classy import classy_menu_item
@@ -24,10 +21,10 @@ class ExtensionView(BaseView):
         return super(ExtensionView, self).index()
 
     def _populate_form(self, form):
-        form.context.choices = self._build_setted_choices_context(form)
+        form.context.choices = self._build_set_choices_context(form)
         return form
 
-    def _build_setted_choices_context(self, extension):
+    def _build_set_choices_context(self, extension):
         if not extension.context.data or extension.context.data == 'None':
             return []
         return [(extension.context.data, extension.context.data)]
@@ -56,7 +53,7 @@ class ExtensionListingView(LoginRequiredView):
             if end - start > MAX_POSSIBILITIES:
                 continue
 
-            values = [v for v in xrange(start, end) if not search or search in unicode(v)]
+            values = [v for v in range(start, end) if not search or search in str(v)]
             all_extens.update(values)
 
         if not all_extens:
