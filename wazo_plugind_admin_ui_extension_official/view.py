@@ -66,7 +66,7 @@ class ExtensionListingView(LoginRequiredView):
                 continue
 
             if end - start > MAX_POSSIBILITIES:
-                continue
+                end = start + MAX_POSSIBILITIES
 
             # TODO benchmark to improve this
             for v in range(start, end):
