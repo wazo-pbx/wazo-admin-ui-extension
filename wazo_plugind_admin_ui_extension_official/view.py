@@ -32,7 +32,22 @@ class ExtensionView(BaseView):
 
 class ExtensionListingView(LoginRequiredView):
 
-    def list_available_exten(self):
+    def list_available_exten_incall(self):
+        return self._list_available_exten(context_range='incall_ranges')
+
+    def list_available_exten_group(self):
+        return self._list_available_exten(context_range='group_ranges')
+
+    def list_available_exten_user(self):
+        return self._list_available_exten(context_range='user_ranges')
+
+    def list_available_exten_queue(self):
+        return self._list_available_exten(context_range='queue_ranges')
+
+    def list_available_exten_conference(self):
+        return self._list_available_exten(context_range='conference_room_ranges')
+
+    def _list_available_exten(self, context_range):
         search = request.args.get('term') or ''
         context = request.args.get('context')
         if not context:
@@ -43,35 +58,36 @@ class ExtensionListingView(LoginRequiredView):
             return jsonify({'results': []})
 
         all_extens = set()
-        for user_range in context['user_ranges']:
+        for ressource_range in context[context_range]:
             try:
-                start = int(user_range['start'])
-                end = int(user_range['end']) + 1
+                start = int(ressource_range['start'])
+                end = int(ressource_range['end']) + 1
             except ValueError:
                 continue
 
             if end - start > MAX_POSSIBILITIES:
-                continue
+                end = start + MAX_POSSIBILITIES
 
-            values = [v for v in range(start, end) if not search or search in str(v)]
-            all_extens.update(values)
+            # TODO benchmark to improve this
+            for v in range(start, end):
+                if not search or search in str(v):
+                    if context_range == 'incall_ranges':
+                        all_extens.add(str(v).zfill(ressource_range['did_length']))
+                    else:
+                        all_extens.add(str(v))
 
         if not all_extens:
             return jsonify({'results': []})
 
         used_extens = set([])
-        for extension in self.service.list(search=search)['items']:
+        for extension in self.service.list(search=search, context=context['name'])['items']:
             if search and search not in extension['exten']:
                 continue
-            try:
-                used_exten = int(extension['exten'])
-            except ValueError:
-                continue
-            used_extens.add(used_exten)
+
+            used_extens.add(extension['exten'])
 
         valid_extens = all_extens - used_extens
-        valid_extens = list(valid_extens)
-        valid_extens.sort()
+        valid_extens = sorted(valid_extens)
 
         results = [{'id': exten, 'text': exten} for exten in valid_extens]
         return jsonify({'results': results})

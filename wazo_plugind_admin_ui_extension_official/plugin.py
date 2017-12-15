@@ -28,6 +28,10 @@ class Plugin(object):
 
         register_destination_form('extension', 'Extension', ExtensionDestinationForm)
 
-        register_listing_url('available_extension', 'extension.ExtensionListingView:list_available_exten')
+        register_listing_url('available_extension_incall', 'extension.ExtensionListingView:list_available_exten_incall')
+        register_listing_url('available_extension_group', 'extension.ExtensionListingView:list_available_exten_group')
+        register_listing_url('available_extension_user', 'extension.ExtensionListingView:list_available_exten_user')
+        register_listing_url('available_extension_queue', 'extension.ExtensionListingView:list_available_exten_queue')
+        register_listing_url('available_extension_conference', 'extension.ExtensionListingView:list_available_exten_conference')
 
         core.register_blueprint(extension)
