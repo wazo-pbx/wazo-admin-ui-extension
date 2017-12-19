@@ -1,6 +1,6 @@
 name: admin-ui-extension
 namespace: official
-version: 1.1.0
+version: 1.2.0
 author: Wazo Team
 display_name: Extensions
 min_wazo_version: 17.17
