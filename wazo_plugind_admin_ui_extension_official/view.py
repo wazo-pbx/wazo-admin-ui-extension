@@ -2,6 +2,7 @@
 # SPDX-License-Identifier: GPL-3.0+
 
 from flask import jsonify, request
+from flask_babel import lazy_gettext as l_
 from flask_menu.classy import classy_menu_item
 
 from wazo_admin_ui.helpers.classful import BaseView, LoginRequiredView
@@ -15,8 +16,8 @@ class ExtensionView(BaseView):
     form = ExtensionForm
     resource = 'extension'
 
-    @classy_menu_item('.advanced', 'Advanced', order=9, icon="gears")
-    @classy_menu_item('.advanced.extensions', 'Extensions', order=1, icon="tty")
+    @classy_menu_item('.advanced', l_('Advanced'), order=9, icon="gears")
+    @classy_menu_item('.advanced.extensions', l_('Extensions'), order=1, icon="tty")
     def index(self):
         return super(ExtensionView, self).index()
 

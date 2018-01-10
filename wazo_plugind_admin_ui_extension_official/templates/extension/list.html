@@ -1,12 +1,12 @@
 {% extends "layout.html" %}
 
 {% block content_header %}
-  {{ build_breadcrumb('Extensions', '', 'tty', ['List']) }}
+  {{ build_breadcrumb(_('Extensions'), '', 'tty', ['List']) }}
 {% endblock %}
 
 {% block content %}
   <section class="content">
-    {% call build_list_containers('Extension', 'tty') %}
+    {% call build_list_containers(_('Extension'), 'tty') %}
       {% call build_list_table() %}
         {% call build_list_table_headers(get=url_for('.ExtensionView:get', id=''), delete=url_for('.ExtensionView:delete', id='')) %}
           <th>Extension</th>
@@ -46,9 +46,9 @@
       {% endcall %}
     {% endcall %}
 
-    {% call build_hidden_add_containers('Add Extension') %}
+    {% call build_hidden_add_containers(_('Add Extension')) %}
       {% call build_form() %}
-        {% call add_default_fields(form=form, submit_value="Add") %}
+        {% call add_default_fields(form=form, submit_value=_('Add')) %}
             {{ render_field(form.exten) }}
             {{ render_field(form.context,
                             data_listing_href=url_for(listing_urls['context'])) }}
