@@ -14,7 +14,6 @@ from flask_menu.classy import classy_menu_item
 from requests.exceptions import HTTPError
 
 from wazo_admin_ui.helpers.classful import BaseView, LoginRequiredView, flash_basic_form_errors
-from wazo_admin_ui.helpers.destination import listing_urls
 
 from .form import ExtensionForm, ExtensionFeaturesForm
 
@@ -45,7 +44,7 @@ class ExtensionFeaturesView(BaseView):
     resource = 'extension_Features'
 
     @classy_menu_item('.advanced.extensions_features', l_('Extensions Features'), order=2, icon="fax")
-    def index(self, form=None):
+    def index(self):
         resource = {}
         try:
             resource['extensions'] = self.service.list()['items']
@@ -53,13 +52,8 @@ class ExtensionFeaturesView(BaseView):
             self._flash_http_error(error)
             return self._redirect_for('index')
 
-        form = form or self._map_resources_to_form(resource)
-        form = self._populate_form(form)
-
         return render_template(self._get_template('edit_features'),
-                               form=form,
-                               resource=resource,
-                               listing_urls=listing_urls)
+                               form=self.form(data=resource))
 
     @route('/put', methods=['POST'])
     def put(self):
@@ -68,23 +62,15 @@ class ExtensionFeaturesView(BaseView):
             flash_basic_form_errors(form)
             return self.index(form)
 
-        resources = self._map_form_to_resources(form)
+        resources = form.to_dict()
         try:
             self.service.update_extension_features(resources['extensions'])
         except HTTPError as error:
-            form = self._fill_form_error(form, error)
             self._flash_http_error(error)
-            return self.index(form)
+            return self.index()
 
         flash(_('%(resource)s: Resource has been updated', resource=self.resource), 'success')
         return self._redirect_for('index')
-
-    def _map_resources_to_form(self, resource):
-        form = self.form(data=resource)
-        return form
-
-    def _populate_form(self, form):
-        return form
 
 
 class ExtensionListingView(LoginRequiredView):
