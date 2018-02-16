@@ -1,4 +1,4 @@
-# Copyright 2017 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2017-2018 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0+
 
 from flask_babel import lazy_gettext as l_
@@ -8,8 +8,8 @@ from wazo_admin_ui.helpers.plugin import create_blueprint
 from wazo_admin_ui.helpers.destination import register_destination_form, register_listing_url
 
 from .form import ExtensionDestinationForm
-from .service import ExtensionService
-from .view import ExtensionView, ExtensionListingView
+from .service import ExtensionService, ExtensionFeaturesService
+from .view import ExtensionView, ExtensionListingView, ExtensionFeaturesView
 
 
 extension = create_blueprint('extension', __name__)
@@ -23,6 +23,10 @@ class Plugin(object):
         ExtensionView.service = ExtensionService()
         ExtensionView.register(extension, route_base='/extensions')
         register_flaskview(extension, ExtensionView)
+
+        ExtensionFeaturesView.service = ExtensionFeaturesService()
+        ExtensionFeaturesView.register(extension, route_base='/extensions_features')
+        register_flaskview(extension, ExtensionFeaturesView)
 
         ExtensionListingView.service = ExtensionService()
         ExtensionListingView.register(extension, route_base='/extensions_listing')
