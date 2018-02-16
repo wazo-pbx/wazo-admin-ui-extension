@@ -41,7 +41,6 @@ class ExtensionView(BaseView):
 
 class ExtensionFeaturesView(BaseView):
     form = ExtensionFeaturesForm
-    resource = 'extension_Features'
 
     @classy_menu_item('.advanced.extensions_features', l_('Extensions Features'), order=2, icon="fax")
     def index(self):
@@ -69,7 +68,7 @@ class ExtensionFeaturesView(BaseView):
             self._flash_http_error(error)
             return self.index()
 
-        flash(_('%(resource)s: Resource has been updated', resource=self.resource), 'success')
+        flash(_('Extensions features has been updated'), 'success')
         return self._redirect_for('index')
 
 
