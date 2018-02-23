@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block content_header %}
-  {{ build_breadcrumb(_('Extensions'), '', 'tty', ['List']) }}
+  {{ build_breadcrumb(_('Extensions'), '', 'tty', [_('List')]) }}
 {% endblock %}
 
 {% block content %}
@@ -9,14 +9,14 @@
     {% call build_list_containers(_('Extension'), 'tty') %}
       {% call build_list_table() %}
         {% call build_list_table_headers(get=url_for('.ExtensionView:get', id=''), delete=url_for('.ExtensionView:delete', id='')) %}
-          <th>Extension</th>
-          <th>Context</th>
-          <th>Conference ID</th>
-          <th>Parking Lot ID</th>
-          <th>Group ID</th>
-          <th>Incall ID</th>
-          <th>Lines ID</th>
-          <th>Outcall ID</th>
+          <th>{{ _('Extension') }}</th>
+          <th>{{ _('Context') }}</th>
+          <th>{{ _('Conference ID') }}</th>
+          <th>{{ _('Parking Lot ID') }}</th>
+          <th>{{ _('Group ID') }}</th>
+          <th>{{ _('Incall ID') }}</th>
+          <th>{{ _('Lines ID') }}</th>
+          <th>{{ _('Outcall ID') }}</th>
         {% endcall %}
         {% call(extension) build_list_table_rows(resource_list['items']) %}
           <td>{{ extension.exten }}</td>
