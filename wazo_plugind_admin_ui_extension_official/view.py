@@ -59,14 +59,14 @@ class ExtensionFeaturesView(BaseView):
         form = self.form()
         if not form.csrf_token.validate(form):
             flash_basic_form_errors(form)
-            return self.index(form)
+            return self._index(form)
 
         resources = form.to_dict()
         try:
             self.service.update_extension_features(resources['extensions'])
         except HTTPError as error:
             self._flash_http_error(error)
-            return self.index()
+            return self._index()
 
         flash(_('Extensions features has been updated'), 'success')
         return self._redirect_for('index')
