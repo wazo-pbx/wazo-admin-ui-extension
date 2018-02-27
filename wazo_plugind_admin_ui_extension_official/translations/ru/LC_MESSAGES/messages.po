@@ -1,14 +1,14 @@
-# Translations template for wazo-admin-ui-extension.
+# Translations template for wazo_admin_ui_extension.
 # Copyright (C) 2018 The Wazo Authors  (see the AUTHORS file)
 # This file is distributed under the same license as the
-# wazo-admin-ui-extension project.
+# wazo_admin_ui_extension project.
 # Wazo Dev Team <dev@wazo.community>, 2018.
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: wazo-admin-ui-extension 0.1\n"
+"Project-Id-Version: wazo_admin_ui_extension 0.1\n"
 "Report-Msgid-Bugs-To: 'dev@wazo.community'\n"
-"POT-Creation-Date: 2018-02-23 13:45-0500\n"
+"POT-Creation-Date: 2018-02-27 13:42-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Language-Team: Russian (https://www.transifex.com/wazo/teams/69545/ru/)\n"
 "MIME-Version: 1.0\n"
